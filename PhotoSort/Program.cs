@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PhotoSort
@@ -16,7 +13,17 @@ namespace PhotoSort
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new PhotoSortGUI());
+        }
+        //initalise variables
+        
+        
+    }
+    public class SortClass
+    {
+        public void initiateSort(string IndexFilePath, string PhotoLocationPath, string SortedLocationPath)
+        {
+
         }
     }
 }
