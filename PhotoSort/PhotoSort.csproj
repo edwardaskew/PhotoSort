@@ -54,17 +54,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SortPhotos.cs" />
-    <Compile Include="PhotoSort.cs">
+    <Compile Include="ExifExtractor.cs" />
+    <Compile Include="Processor.cs" />
+    <Compile Include="PhotoSortGUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PhotoSort.Designer.cs">
-      <DependentUpon>PhotoSort.cs</DependentUpon>
+    <Compile Include="PhotoSortGUI.Designer.cs">
+      <DependentUpon>PhotoSortGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="PhotoSort.resx">
-      <DependentUpon>PhotoSort.cs</DependentUpon>
+    <Compile Include="SortRule\DefaultRule.cs" />
+    <Compile Include="SortRule\IndexFileSortRule.cs" />
+    <Compile Include="SortRule\ISortRule.cs" />
+    <Compile Include="SortRule\SortRuleBase.cs" />
+    <EmbeddedResource Include="PhotoSortGUI.resx">
+      <DependentUpon>PhotoSortGUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

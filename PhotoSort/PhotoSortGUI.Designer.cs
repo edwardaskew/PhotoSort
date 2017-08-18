@@ -116,7 +116,7 @@
             this.SortingProgress.Step = 1;
             this.SortingProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.SortingProgress.TabIndex = 16;
-            this.SortingProgress.Click += new System.EventHandler(this.progressBar1_Click);
+
             // 
             // OutputText
             // 
@@ -175,7 +175,7 @@
             this.SortingProgress2.Step = 1;
             this.SortingProgress2.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.SortingProgress2.TabIndex = 16;
-            this.SortingProgress2.Click += new System.EventHandler(this.progressBar1_Click_1);
+
             // 
             // IndexFilePathError
             // 
@@ -188,7 +188,7 @@
             this.IndexFilePathError.TabIndex = 17;
             this.IndexFilePathError.Text = "!";
             this.IndexFilePathError.Visible = false;
-            this.IndexFilePathError.Click += new System.EventHandler(this.label3_Click);
+
             // 
             // PhotoLocationPathError
             // 
@@ -238,7 +238,6 @@
             this.Controls.Add(this.IndexFilePath);
             this.Name = "PhotoSortGUI";
             this.Text = "Photo sort";
-            this.Load += new System.EventHandler(this.photo_sort_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

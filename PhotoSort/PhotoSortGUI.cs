@@ -1,16 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using PhotoSort;
-using MainSort;
 
 namespace PhotoSort
 {
@@ -22,6 +12,8 @@ namespace PhotoSort
             InitializeComponent();
             SortingProgress.Value = 0;
             OutputText.Text = "";
+
+            
         }
         private void SubmitButton_Click(object sender, EventArgs e)
         {
@@ -32,9 +24,21 @@ namespace PhotoSort
             }
             else
             {
-                ProgressBar ProgressBarOfProgram =  SortingProgress;
-                ProgressBar SecondProgressBar = SortingProgress2;
-                Main.TriggerFunctions(IndexFileInputBox.Text, PhotoLocationBox.Text, SortedLocationBox.Text, ProgressBarOfProgram, SecondProgressBar);
+                var processor = new Processor(File.ReadAllLines(IndexFileInputBox.Text));
+                processor.SortProgress += progress =>
+                {
+                    SortingProgress.Value = progress;
+                    SortingProgress.Update();
+                };
+
+                processor.CopyProgress += progress =>
+                {
+                    SortingProgress2.Value = progress;
+                    SortingProgress2.Update();
+                };
+
+                processor.Sort(new DirectoryInfo(PhotoLocationBox.Text));
+                processor.CopyImages(new DirectoryInfo(SortedLocationBox.Text));
             }
         }
         //check if paths are valid
@@ -98,74 +102,45 @@ namespace PhotoSort
         }
         private void IndexFileButton_Click(object sender, EventArgs e)
         {
-            using (var ofd = new OpenFileDialog())
-            {
-                DialogResult result = ofd.ShowDialog();
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(ofd.FileName))
-                {
-                    IndexFileInputBox.Text = ofd.FileName;
-                }
-            }
+            PopulateFilePath(IndexFileInputBox);
         }
         private void PhotoFileButton_Click(object sender, EventArgs e)
         {
-            using (var fbd = new FolderBrowserDialog())
-            {
-                DialogResult result = fbd.ShowDialog();
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    PhotoLocationBox.Text = fbd.SelectedPath;
-                }
-            }
+            PopulateDirectoryPath(PhotoLocationBox);
         }
+
         private void SortedFileButton_Click(object sender, EventArgs e)
+        {
+            PopulateDirectoryPath(SortedLocationBox);
+        }
+
+        private static void PopulateDirectoryPath(TextBox textBox)
         {
             using (var fbd = new FolderBrowserDialog())
             {
-                DialogResult result = fbd.ShowDialog();
+                var result = fbd.ShowDialog();
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    SortedLocationBox.Text = fbd.SelectedPath;
+                    textBox.Text = fbd.SelectedPath;
                 }
             }
         }
+
+        private static void PopulateFilePath(TextBox textBox)
+        {
+            using (var ofd = new OpenFileDialog())
+            {
+                var result = ofd.ShowDialog();
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(ofd.FileName))
+                {
+                    textBox.Text = ofd.FileName;
+                }
+            }
+        }
+
         private void Close_click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-        private void ReadFile_Click(object sender, EventArgs e)
-        {
-            string[] IndexFile = Main.ImportIndexFile(IndexFileInputBox.Text);
-        }
-        public void progressBar1_Click(object sender, EventArgs e)
-        {
-            
-        }
-        //not used
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        
-
-        private void photo_sort_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void progressBar1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
